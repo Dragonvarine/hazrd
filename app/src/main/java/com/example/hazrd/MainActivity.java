@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         emailInput = (EditText) findViewById(R.id.emailInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
 
-        createUser(); //This will change, purely for testing
+        signInUser(); //This will change, purely for testing
         //Whole activity is subject to change a lot to fit with the changes.
     }
 
