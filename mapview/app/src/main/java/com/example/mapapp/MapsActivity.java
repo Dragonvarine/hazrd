@@ -62,7 +62,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sofia= new LatLng(42.6977082,23.3218675);
         LatLng plovdiv = new LatLng(42.1354079,24.7452904);
         LatLng varna = new LatLng(43.2140504,27.9147333);
-        mMap.addMarker(new MarkerOptions().position(plovdiv).title("Marker Bulgaria"));
+          mMap.addMarker(new MarkerOptions()
+                .position(plovdiv)
+                .title("Marker Bulgaria")
+                .draggable(true)
+
+        );
         mMap.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                        plovdiv,
