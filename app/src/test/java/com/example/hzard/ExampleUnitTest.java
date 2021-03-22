@@ -1,4 +1,4 @@
-package com.example.mapapp;
+package com.example.hzard;
 
 import org.junit.Test;
 
