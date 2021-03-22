@@ -41,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
         emailInput = (EditText) findViewById(R.id.emailInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
 
+
         signUpScreenText = (TextView) findViewById(R.id.createUserButton);
 
         signInUser(); //This will change, purely for testing
         navigateToRegistration();
+      
         //Whole activity is subject to change a lot to fit with the changes.
     }
 
