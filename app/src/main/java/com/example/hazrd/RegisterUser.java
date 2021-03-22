@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,20 +42,32 @@ public class RegisterUser extends AppCompatActivity {
 
         signInScreenText = (TextView) findViewById(R.id.alreadyUserButton);
 
-        //registerUser();
+        signUpUser();
         navigateToLogin();
     }
 
-    private void registerUser() {
-        mAuth = FirebaseAuth.getInstance();
+    private void signUpUser() {
+        Button signUpButton;
 
-        email = emailInput.getText().toString();
+        signUpButton = (Button) findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        //If both password inputs are equal
-        if (passwordInput1.getText().toString().equals(passwordInput2.getText().toString())) {
-            password = passwordInput1.getText().toString();
-        }
+                email = emailInput.getText().toString();
+                password = passwordInput1.getText().toString();
 
+                try {
+                    signUpMethod(email, password);
+                } catch (Exception e) {
+                    Toast.makeText(RegisterUser.this, "ERROR: Empty fields.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void signUpMethod(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
