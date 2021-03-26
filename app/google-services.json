@@ -10,9 +10,6 @@
         "mobilesdk_app_id": "1:512496235196:android:ffe09ff303a4dbb6c296b9",
         "android_client_info": {
           "package_name": "com.example.hazrd"
-        "mobilesdk_app_id": "1:512496235196:android:bba3a51df0fcd2afc296b9",
-        "android_client_info": {
-          "package_name": "com.marshmallow.hazrd"
         }
       },
       "oauth_client": [
