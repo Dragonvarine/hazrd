@@ -96,7 +96,7 @@ public class RegisterUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterUser.this, MainActivity.class);
-                //intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("Unsuccessful");
                         }
 
-                        Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterUser.class);
-                //intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
