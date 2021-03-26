@@ -1,4 +1,4 @@
-package com.example.hzard;
+package com.example.hazrd;
 
 import org.junit.Test;
 

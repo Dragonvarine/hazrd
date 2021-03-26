@@ -1,4 +1,4 @@
-package com.example.hzard;
+package com.example.hazrd;
 
 import android.content.Context;
 
