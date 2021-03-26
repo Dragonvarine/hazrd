@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Login";
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterUser.class);
+                //intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
