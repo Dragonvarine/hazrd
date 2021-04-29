@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "512496235196",
+    "project_id": "hazrd-85912",
+    "storage_bucket": "hazrd-85912.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512496235196:android:ffe09ff303a4dbb6c296b9",
+        "android_client_info": {
+          "package_name": "com.example.hazrd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512496235196-l7pepm1r7necol01vb2mdr2knd4cr3lj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7otA7dSnQh53JP9lCD5y2SjnzaDfOPwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512496235196-l7pepm1r7necol01vb2mdr2knd4cr3lj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
