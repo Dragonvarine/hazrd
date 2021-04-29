@@ -47,6 +47,7 @@ public class LogInActivity extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.passwordInput);
         signUpScreenText = (TextView) findViewById(R.id.createUserButton);
 
+
         signInUser();
         navigateToRegistration();
     }
@@ -93,7 +94,7 @@ public class LogInActivity extends AppCompatActivity {
                             System.out.println("Unsuccessful");
                         }
 
-                        Intent intent = new Intent(LogInActivity.this, MapsActivity.class);
+                        Intent intent = new Intent(LogInActivity.this, ChatClient.class);
                         startActivity(intent);
                     }
                 });
@@ -103,7 +104,8 @@ public class LogInActivity extends AppCompatActivity {
         signUpScreenText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LogInActivity.this, ChatClient.class);
+                Intent intent = new Intent(LogInActivity.this, RegisterUser.class);
+                intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
