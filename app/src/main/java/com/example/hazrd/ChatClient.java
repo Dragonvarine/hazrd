@@ -6,43 +6,41 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Message;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Array;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChatClient extends AppCompatActivity {
 
+    //UI elements
     TextView messageInput;
     Button messageButton;
-    ArrayList<String> messages = new ArrayList<>(); //TODO: Remove this line, and replace with bottom line.
-    //private ArrayList<MessageObject> messages = new ArrayList<>();
+
+    //Recycler fields
     ChatAdapter adapter;
     RecyclerView recyclerView;
 
-    //Database
+    //Database fields
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, String> messageMap = new HashMap<>();
+
+    //Stored messages
+    ArrayList<String> messages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +56,31 @@ public class ChatClient extends AppCompatActivity {
 
         //Enable sending messages.
         sendMessage();
+
+        db.collection("Messages").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("db", document.getId() + "->" + document.getData());
+                                Map<String, Object> documentMap = new HashMap<>();
+                                documentMap.putAll(document.getData());
+                                System.out.println(documentMap.toString());
+                                String text = (String) documentMap.get("message");
+                                System.out.println(text);
+
+                                messages.add(text);
+
+                                adapter.notifyDataSetChanged();
+                                recyclerView.smoothScrollToPosition(messages.size() - 1);
+                            }
+                        }
+                        else {
+                            Log.d("db", "Error getting documents");
+                        }
+                    }
+                });
     }
 
     private void sendMessage() {
@@ -68,6 +91,7 @@ public class ChatClient extends AppCompatActivity {
 
                     messageMap.put("username", "Test_user");
                     messageMap.put("message", messageInput.getText().toString());
+
 
                     db.collection("Messages").document().set(messageMap)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -83,10 +107,12 @@ public class ChatClient extends AppCompatActivity {
                                 }
                             });
 
+
+
                     //Update the view.
                     adapter.notifyDataSetChanged();
                     messageInput.setText(null);
-                    //recyclerView.smoothScrollToPosition(messages.size() - 1);
+                    recyclerView.smoothScrollToPosition(messages.size() - 1);
                 } else {
                     Toast.makeText(ChatClient.this, "ERROR: Empty fields.",
                             Toast.LENGTH_SHORT).show();
