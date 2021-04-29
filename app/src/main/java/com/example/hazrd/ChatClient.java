@@ -1,5 +1,6 @@
 package com.example.hazrd;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,12 +16,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatClient extends AppCompatActivity {
 
@@ -30,7 +39,10 @@ public class ChatClient extends AppCompatActivity {
     //private ArrayList<MessageObject> messages = new ArrayList<>();
     ChatAdapter adapter;
     RecyclerView recyclerView;
-    private ClientSocket clientSocket;
+
+    //Database
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Map<String, String> messageMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +52,6 @@ public class ChatClient extends AppCompatActivity {
         //UI elements
         messageInput = (EditText) findViewById(R.id.message_input);
         messageButton = (Button) findViewById(R.id.message_button);
-
-
-        Thread thread = new Thread(clientSocket = new ClientSocket());
-        thread.start();
 
         //Initiate the display.
         initRecyclerView();
@@ -57,13 +65,28 @@ public class ChatClient extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!messageInput.getText().toString().equals("")) {
-                    //Initialise background task that the server reads.
 
+                    messageMap.put("username", "Test_user");
+                    messageMap.put("message", messageInput.getText().toString());
+
+                    db.collection("Messages").document().set(messageMap)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(ChatClient.this, "Saved", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ChatClient.this, "Failed to save", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                     //Update the view.
                     adapter.notifyDataSetChanged();
                     messageInput.setText(null);
-                    recyclerView.smoothScrollToPosition(messages.size() - 1);
+                    //recyclerView.smoothScrollToPosition(messages.size() - 1);
                 } else {
                     Toast.makeText(ChatClient.this, "ERROR: Empty fields.",
                             Toast.LENGTH_SHORT).show();
@@ -78,4 +101,5 @@ public class ChatClient extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 }
