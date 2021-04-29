@@ -44,7 +44,7 @@ public class ReportIssue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!issueTextBox.getText().toString().equals("")) {
-                    theReport.put("UserID", "Test");
+                    theReport.put("UserID", user.getUid());
                     theReport.put("Text", issueTextBox.getText().toString());
 
                     db.collection("Issues").document().set(theReport)
