@@ -46,8 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         signUpScreenText = (TextView) findViewById(R.id.createUserButton);
 
-        signInUser(); //This will change, purely for testing
-        navigateToRegistration();
+
+        Intent intent = new Intent(MainActivity.this, ReportIssue.class);
+        startActivity(intent);
+
+        //signInUser(); //This will change, purely for testing
+        //navigateToRegistration();
       
         //Whole activity is subject to change a lot to fit with the changes.
     }
